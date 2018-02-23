@@ -1,4 +1,3 @@
-# commonBoard
+ï»¿# commonBoard
 # This is sparta!!!!
-# ¼öÁ¤ÇØº¸ÀÚ
-# µÇ³ª ¾ÈµÇ³ª!?
+# ìˆ˜ì •í•´ë³´ì # ë„˜ê¸´ë‹¤.
