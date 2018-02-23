@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 서진이 바꿌다
+=======
+hi, steve what do u like to do?
+>>>>>>> 59f3055c97b3070eda65f50d1fae3f19ea43756f
