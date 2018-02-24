@@ -4,4 +4,4 @@
 hi, steve what do u like to do?
 >>>>>>> 59f3055c97b3070eda65f50d1fae3f19ea43756f
 
-sgdsg
+sgdsg 한글이 되는거구나
