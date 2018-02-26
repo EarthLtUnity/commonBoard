@@ -1,0 +1,265 @@
+testJQueryAjax.jsp
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>JQuery Ajax 테스트 </title>
+</head>
+<body>
+<script src="js/jquery-3.2.1.min.js"></script>
+
+	<h3> 1. 서버로 보낼 전송값은 없고, 결과로 문자열을 받아서 처리하는 방법</h3>
+	<hr>
+	<p id="p1" style="width:400px; height:50px; border: 1px solid red;"></p>
+	<p id="p2" style="width:400px; height:50px; border: 1px solid red;"></p>
+	<button id="test1">전송 확인하기</button>
+	
+	<hr>
+	<br><br><br>
+	
+	<h3> 2. 서버로 값을 보내고,결과를 문자열로 받아서 처리하는 방법</h3>
+	<hr>
+	<p id="p3" style="width:400px; height:50px; border: 1px solid red;"></p>
+	<p id="p4" style="width:400px; height:50px; border: 1px solid red;"></p>
+	<button id="test2">전송 확인하기</button>
+	
+	<hr>
+	<br><br><br>
+	
+	<h3> 3. 서버로 데이터를 전송하고 결과를 안받는 방법</h3>
+	<button id ="test3">전송 확인하기</button>
+	
+	<hr>
+	<br><br><br>
+	
+	<h3> 4. 서버로 데이터를 요청하고 , 결과를 JSON 형식으로 객체를 받아 처리하는 방법</h3>
+	<hr>
+	<p id="p5" style="width:400px; height:50px; border: 1px solid red;"></p>
+	<p id="p6" style="width:400px; height:50px; border: 1px solid red;"></p>
+	<button id="test4">전송 확인하기</button>
+	
+	<hr>
+	<br><br><br>
+	
+	<h3> 5. 서버로 부터 List를 결과로 받아서 처리하는 방법 </h3>
+	<hr>
+	<p id="p7" style="width:400px; height:150px; border: 1px solid red;"></p>
+	<p id="p8" style="width:400px; height:150px; border: 1px solid red;"></p>
+	<button id="test5">전송 확인하기</button>
+	
+	
+	<script type="text/javascript">
+		$(function(){
+			$("#test1").click(function(){
+				// 컨트롤러로 요청하고 결과를 받는 비동기 통신 구현
+				// jQuery.get() / jQuery.post() / jQuery.ajax()
+				// jQuery.get("요청 주소(URL)", {전달할 값의 아이디 : 값}, 리턴 받아서 처리할 메소드)
+				
+				//$.get()을 사용하는 경우
+				$.get("test1.do",function(data){
+					$("#p1").text(data);
+				});
+				
+				
+				//$.ajax()를 사용하는 경우
+				$.ajax({
+					// 요청 주소 URL
+					// 데이터 전송할 경우 data
+					// 받을 결과에 대한 데이터타입 dataType
+					// 요청 방싱(GET/POST) type
+					// 전송에 성고했을 경우 success
+					// 실패했을 경우 error
+					// 결과에 상관 없이 처리 해야할 내용이 있을 경우 complete
+			
+					url : "test1.do",
+					type : "GET",
+					success :  function(data){
+						var str = $("#p1").text();
+						$('#p2').text(data+"(복사본)");
+					}
+				});
+			});   // test1 End
+			
+			
+			
+			
+			$('#test2').click(function(){ // ------------------------------ test2 Start
+				//데이터를 서버에 전송하여 결과를 문자열로 받는 방식
+				//$.get()
+				$.get("test2.do",{  // ---------- get Start
+					userid : "get아이디",
+					passwd : "pass01"
+				}, function(data){
+					$('#p3').text(data);
+				});  // -------------------------- get End
+
+				
+				//$.ajax()
+				$.ajax({ // ---------------------- test2 Start
+					url : "test2.do",
+					data : {userid: "ajax아이디",
+							passwd : "pass01"},
+							type : "GET",
+							success : function(myCallback){
+								var str = $('#p3').text();
+								$('#p4').text(myCallback+" (복사본)")
+							},
+				});// ----------------------------- test2 End
+				
+			});  // ------------------------------------------------------- test2 End
+			
+			
+			
+			
+			
+			
+			
+			$('#test3').click(function(){// ------------------------------ test3 Start
+				//서버로 데이터를 전송하고 결과를 안받는 방법
+				//$.post();
+				$.post("test3.do",{
+					title : "$.post() 게시글입니다",
+					writer : "김윤환",
+					content : "잘생긴 윤환씨"
+				});
+			
+				
+				//$.ajax();
+				$.ajax({
+					url : "test3.do",
+					data : { title : "$.ajax() 게시글입니다",
+							writer : "김영여리",
+							content : "잘생긴 여리여리"}, 
+							type : "post"
+					});
+				
+			});// ------------------------------------------------------- test3 End
+			
+			
+			
+			
+			
+			
+			$('#test4').click(function(){// ------------------------------ test4 Start
+				//서버로 데이터를 요청하고, 결과를 JSON으로 받는 방법
+				//$getJSON()/$.ajax()
+				
+				//$.getJSON()
+				$.getJSON("test4.do",{boardNo: "20"}, 
+						function(data){
+							$('#p5').text(
+									"getJSON() : " +
+								+	data.boardNo+ ", "
+								+	data.writer+", "
+								/* +	decodeURIComponent(data.writer)+",2 " */
+								+	data.content+", "
+						);
+					});
+				
+			
+				//$ajax()
+				$.ajax({
+					url:"test4.do",
+					data :{boardNo:"10"
+						},
+						type:"GET",
+						datatype:"json",
+						success : function(board){
+							$('#p6').text(
+									"ajax() : " +
+								+	board.boardNo+", "
+								+	decodeURIComponent(board.writer)+", "
+								+	board.content)
+						}
+					
+				});
+			
+			
+			
+			});// ------------------------------------------------------- test4 End
+			
+			
+			
+			
+			
+			$('#test5').click(function(){// ------------------------------ test5 Start
+				//서버로 부터 list를 받아서 JSON 배열에 담아 결과를 받고, 
+				// 해당 데이터를 처리하는 방법
+				
+				//$.getJSON();
+				$.getJSON("test5.do", {boardNo:"5"},function(json){  // --- getJSON() Start
+					
+					//배열 변수를 선언
+					var jsonArr;
+					//json 객체 선언
+					var jsonStr=JSON.stringify(json);
+					//배열 변수 선언
+					var jsonArr = JSON.parse(jsonStr);
+					//모든 객체의 정보를 담을 변수 선언
+					var values = "";
+					
+					for(var i in jsonArr.list){
+						values += (
+						json.list[i].boardNo + ", "
+					+	decodeURIComponent(json.list[i].writer) + ", "
+					+	decodeURIComponent(json.list[i].content) + "<br>"
+							);				
+					}
+					$('#p7').html(values);
+					
+				}); // ------------------------------ getJSON() End
+					
+				
+				
+				
+				//$.ajax();
+				$.ajax({	// ------------------------------ ajax() Start
+					url : "test5.do",
+					data : {
+						boardNo:"10"
+					},
+					dataType : "json",
+					type :"post",
+					success : function(json){
+						//전체를 담고 있는 JSON 객체를 생성
+						var jsonStr = JSON.stringify(json);
+						//담고 있는 개체를  JSON 배열로 파싱처리
+						var jsonArr = JSON.parse(jsonStr);
+						var values="";
+						for(var i in jsonArr.list){
+							values +=(
+								json.list[i].boardNo+", "
+							+	decodeURIComponent(json.list[i].writer)+", "
+							+	decodeURIComponent(json.list[i].content)+"<br>"
+								);
+						}
+						$('#p8').html(values);
+					}
+				});	// ------------------------------------------- ajax() End
+				
+				
+			});// ------------------------------------------------------- test5 End
+			
+			
+			
+			
+			
+		});
+	</script>
+	
+	
+</body>
+</html>
+
+
+
+
+
+
+
