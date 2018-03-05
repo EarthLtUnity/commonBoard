@@ -7,7 +7,8 @@
 - ex) "180223 "기존 내용 삭제 후 한줄 추가", "영어단어 스펠링 수정" 등등
 - commit message 관련 참고 글
 - http://meetup.toast.com/posts/106
-
+- git 되돌리기 관련 만화
+- http://www.devpools.kr/2017/01/31/%EA%B0%9C%EB%B0%9C%EB%B0%94%EB%B3%B4%EB%93%A4-1%ED%99%94-git-back-to-the-future/
 - 2일 27일 숙제
 - 1. commonBoard프로젝트의 자기폴더에 있는 모든 파일 다 삭제(방법은 자유)
 - 2. 문자열 UTF-8d인 html 파일 하나 만들기(문자열 깨지는것 때문임!)
